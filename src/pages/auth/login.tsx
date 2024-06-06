@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useState } from 'react'
 
 import { ButtonCommon } from '@/components/Button/button-common'
 import { FormCommon } from '@/components/Form/form-common'
@@ -25,8 +24,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { t } = useTranslation('login')
   const router = useRouter()
   const [data, setData] = useStateDataForm({})
-  const [, setLoading] = useState(false)
-
   const onSubmit = async () => {
     try {
       const response = await signIn('credentials', {
