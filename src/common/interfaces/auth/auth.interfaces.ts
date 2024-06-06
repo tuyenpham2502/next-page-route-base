@@ -5,7 +5,6 @@ import { SignInRequest } from '@/common/types/dto/auth/signInRequest'
 import { RequestResponse } from '@/common/types/dto/common/requestResponse'
 
 export interface IAuthManagementService {
-
   signInAsync(
     endPoint: string,
     params: SignInRequest,
