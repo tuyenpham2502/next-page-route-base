@@ -1,6 +1,9 @@
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
+import LoggerService from '@/common/services/logger.service'
+
+const loggerService = new LoggerService()
 export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
@@ -108,6 +111,17 @@ export const authOptions: AuthOptions = {
   },
   pages: {
     signIn: '/auth/login', // custom login page
+  },
+  logger: {
+    error(code, ...message) {
+      loggerService.error(code, message)
+    },
+    warn(code, ...message) {
+      loggerService.warn(code, message)
+    },
+    debug(code, ...message) {
+      loggerService.debug(code, message)
+    },
   },
 }
 
