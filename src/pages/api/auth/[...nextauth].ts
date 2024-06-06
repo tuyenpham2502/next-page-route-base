@@ -89,7 +89,7 @@ export const authOptions: AuthOptions = {
     colorScheme: 'light',
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       // eslint-disable-next-line no-console
       // Persist the OAuth access_token and or the user id to the token right after signin
       // if (account) {
