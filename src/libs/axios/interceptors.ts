@@ -9,10 +9,10 @@ import axios, {
 import axiosRetry from 'axios-retry'
 import { jwtDecode } from 'jwt-decode'
 
+import LocalStorageService from '@/common/services/localStorage.service'
+import LoggerService from '@/common/services/logger.service'
+import { refreshTokenAsync } from 'src/common/repository/auth/hooks/useRefreshToken.hook'
 import { RefreshTokenRequest } from 'src/common/types/dto/auth/refreshTokenRequest'
-import { refreshTokenAsync } from 'src/repository/auth/hooks/useRefreshToken.hook'
-import LocalStorageService from 'src/services/localStorage.service'
-import LoggerService from 'src/services/logger.service'
 import Constants from 'src/utils/constants'
 
 // Request Interceptor

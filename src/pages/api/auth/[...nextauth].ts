@@ -32,24 +32,22 @@ export const authOptions: AuthOptions = {
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        // const res = await fetch('http://localhost:8000/auth/login', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify({
-        //     username: credentials?.username,
-        //     password: credentials?.password,
-        //   }),
-        // })
-        // const user = await res.json()
-
-        const user = {
-          id: '1',
-          email: credentials?.email,
-          name: 'Quoc test',
-        }
-
+        const res = await fetch('https://propero.nobisoft.vn/public/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: credentials?.email,
+            password: credentials?.password,
+          }),
+        })
+        const user = await res.json()
+        // const user = {
+        //   id: '1',
+        //   email: credentials?.email,
+        //   name: 'Quoc test',
+        // }
         // If no error and we have user data, return it
         // if (res.ok && user)
         if (user) {
@@ -88,8 +86,8 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, account }) {
+      console.log('account', account)
       // eslint-disable-next-line no-console
-      console.log({ account })
       // Persist the OAuth access_token and or the user id to the token right after signin
       // if (account) {
       //   token.accessToken = account.access_token
@@ -103,6 +101,8 @@ export const authOptions: AuthOptions = {
       // Send properties to the client, like an access_token and user id from a provider.
       // session.accessToken = token.accessToken
       // session.user.id = token.id
+      // eslint-disable-next-line no-param-reassign
+      session.user = token as any
       return session // The return type will match the one returned in `useSession()`
     },
   },

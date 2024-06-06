@@ -1,11 +1,11 @@
 import { CodesMap } from '@/common/enums/CodeMap'
+import { AuthManagementServices } from '@/common/repository/auth/services/AuthManagement.services'
+import LoggerService from '@/common/services/logger.service'
 import { SignInRequest } from '@/common/types/dto/auth/signInRequest'
 import FailureResponse from '@/common/types/dto/common/failureResponse'
 import InvalidModelStateResponse from '@/common/types/dto/common/invalidModelStateResponse'
 import SuccessResponse from '@/common/types/dto/common/successResponse'
 import { notifyError } from '@/components/Toast/toastMessage'
-import { AuthManagementServices } from '@/repository/auth/services/AuthManagement.services'
-import LoggerService from '@/services/logger.service'
 import { refactorFormDataCommon } from '@/utils/helper'
 
 export const signInAsync = () => {
@@ -20,7 +20,7 @@ export const signInAsync = () => {
     setLoading(true)
     const response = await new AuthManagementServices().signInAsync(
       'public/user/login',
-      refactorFormDataCommon(params),
+      refactorFormDataCommon(params)
       // newCancelToken()
     )
     if ((response as FailureResponse)?.code !== CodesMap.CANCEL_TOKEN) {

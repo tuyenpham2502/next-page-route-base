@@ -1,5 +1,3 @@
-'use client'
-
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
@@ -9,34 +7,20 @@ import { FormCommon } from '@/components/Form/form-common'
 import { InputPasswordCommon } from '@/components/Input/input-password-common'
 import { InputTextCommon } from '@/components/Input/input-text-common'
 import SEOHead from '@/components/Seo'
+import useAuth from '@/hooks/useAuth'
 import { useStateDataForm } from '@/hooks/useStateDataForm'
 import loginImage from 'assets/images/loginImage.svg'
 
 const LoginPage = () => {
+  useAuth('/')
   const router = useRouter()
   const [data, setData] = useStateDataForm({})
   const [, setLoading] = useState(false)
-  // const signInAsync = async () => {
-  //   const params = new SignInRequest({
-  //     email: data.email,
-  //     password: data.password,
-  //   })
-  //   await signInRequest(
-  //     params,
-  //     () => setLoading(true),
-  //     () => {
-  //       router.push('/')
-  //       cookiesService.setStorage('token', 'token')
-  //     },
-  //     () => setLoading(false)
-  //   )
-  // }
 
   const onSubmit = async () => {
     try {
-      setLoading(true)
       const response = await signIn('credentials', {
-        username: data.email,
+        email: data.email,
         password: data.password,
         redirect: false,
       })
@@ -44,7 +28,6 @@ const LoginPage = () => {
       if (response && response.ok) {
         setTimeout(() => {
           router.replace('/')
-          setLoading(false)
         }, 1500)
       }
     } catch (error) {

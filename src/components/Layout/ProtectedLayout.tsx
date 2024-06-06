@@ -13,7 +13,6 @@ export const ProtectedLayout = ({ children }: Props): JSX.Element => {
   const authorized = sessionStatus === 'authenticated'
   const unAuthorized = sessionStatus === 'unauthenticated'
   const loading = sessionStatus === 'loading'
-
   useEffect(() => {
     // check if the session is loading or the router is not ready
     if (loading || !router.isReady) return

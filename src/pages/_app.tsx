@@ -1,6 +1,4 @@
 import '@/styles/globals.css'
-import { StyleProvider } from '@ant-design/cssinjs'
-import { ConfigProvider } from 'antd'
 import type { AppProps } from 'next/app'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
@@ -19,20 +17,16 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAu
   return (
     <>
       <RecoilRoot>
-        <ConfigProvider>
-          <StyleProvider hashPriority='high'>
-            <RecoilOutsideComponent />
-            <SessionProvider session={session}>
-              {Component.requireAuth ? (
-                <ProtectedLayout>
-                  <Component {...pageProps} />
-                </ProtectedLayout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </SessionProvider>
-          </StyleProvider>
-        </ConfigProvider>
+        <RecoilOutsideComponent />
+        <SessionProvider session={session}>
+          {Component.requireAuth ? (
+            <ProtectedLayout>
+              <Component {...pageProps} />
+            </ProtectedLayout>
+          ) : (
+            <Component {...pageProps} />
+          )}
+        </SessionProvider>
       </RecoilRoot>
     </>
   )

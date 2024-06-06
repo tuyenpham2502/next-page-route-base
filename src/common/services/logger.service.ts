@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { ILoggerService } from '@/common/interfaces/services/logger.interface'
-import DateTimeProvider from 'src/services/dateTime.service'
+import DateTimeProvider from '@/common/services/dateTime.service'
 
 export default class LoggerService implements ILoggerService {
   private readonly enabledLogger: boolean = process.env.REACT_APP_ENABLE_LOGGER === 'true'

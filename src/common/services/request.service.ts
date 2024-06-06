@@ -1,27 +1,24 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { AxiosResponse, CancelToken, isCancel } from 'axios'
+import { useSession } from 'next-auth/react'
 
 import { LoadingState } from '@/common/atoms/loadingState'
 import { CodesMap } from '@/common/enums/CodeMap'
 import NetworkException from '@/common/exceptions/networkException'
 import { IRequestService } from '@/common/interfaces/services/request.interface'
+import LoggerService from '@/common/services/logger.service'
 import FailureResponse from '@/common/types/dto/common/failureResponse'
 import InvalidModelStateResponse from '@/common/types/dto/common/invalidModelStateResponse'
 import { RequestResponse } from '@/common/types/dto/common/requestResponse'
 import SuccessResponse from '@/common/types/dto/common/successResponse'
 import { setRecoilStateAsync } from '@/libs/recoil-outside/recoil.service'
 import axiosInstance from 'src/libs/axios/interceptors'
-import CookiesStorageService from 'src/services/cookiesStorage.service'
-import LoggerService from 'src/services/logger.service'
-import Constants from 'src/utils/constants'
 import { acceptFile } from 'src/utils/helper'
 
 export default class RequestService implements IRequestService {
   private readonly loggerService = new LoggerService()
 
   private readonly baseURL = `${process.env.NEXT_PUBLIC_API_URL}`
-
-  private readonly cookiesStorageService = new CookiesStorageService()
 
   private readonly errorCancel: FailureResponse = {
     message: 'cancel token',
@@ -32,7 +29,8 @@ export default class RequestService implements IRequestService {
 
   private getOptions(file: boolean = false) {
     // let token = context?.token || "";
-    const token = this.cookiesStorageService.readStorage(Constants.LocalStorage.ApiToken)
+    const session = useSession()
+    const token = session.data?.user.token || ''
     let opts: any = {
       headers: {
         'Content-Type': 'application/json',

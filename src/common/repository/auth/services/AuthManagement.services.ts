@@ -2,14 +2,14 @@ import { CancelToken } from 'axios'
 
 import NetworkException from '@/common/exceptions/networkException'
 import { IAuthManagementService } from '@/common/interfaces/auth/auth.interfaces'
+import LoggerService from '@/common/services/logger.service'
+import RequestService from '@/common/services/request.service'
 import { RefreshTokenRequest } from '@/common/types/dto/auth/refreshTokenRequest'
 import { SignInRequest } from '@/common/types/dto/auth/signInRequest'
 import FailureResponse from '@/common/types/dto/common/failureResponse'
 import InvalidModelStateResponse from '@/common/types/dto/common/invalidModelStateResponse'
 import { RequestResponse } from '@/common/types/dto/common/requestResponse'
 import SuccessResponse from '@/common/types/dto/common/successResponse'
-import LoggerService from '@/services/logger.service'
-import RequestService from '@/services/request.service'
 
 export class AuthManagementServices implements IAuthManagementService {
   loggerService = new LoggerService()
