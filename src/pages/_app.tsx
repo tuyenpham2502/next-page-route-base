@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
+import { appWithTranslation } from 'next-i18next'
 import { RecoilRoot } from 'recoil'
 
 import { ProtectedLayout } from '@/components/Layout/ProtectedLayout'
@@ -32,4 +33,4 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAu
   )
 }
 
-export default App
+export default appWithTranslation(App)

@@ -1,5 +1,8 @@
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 
 import { ButtonCommon } from '@/components/Button/button-common'
@@ -11,8 +14,15 @@ import useAuth from '@/hooks/useAuth'
 import { useStateDataForm } from '@/hooks/useStateDataForm'
 import loginImage from 'assets/images/loginImage.svg'
 
-const LoginPage = () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['login'])),
+  },
+})
+
+const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   useAuth('/')
+  const { t } = useTranslation('login')
   const router = useRouter()
   const [data, setData] = useStateDataForm({})
   const [, setLoading] = useState(false)
@@ -39,12 +49,12 @@ const LoginPage = () => {
 
   return (
     <>
-      <SEOHead title='Login' />
+      <SEOHead title={t('Sign In')} />
       <div className='flex h-screen bg-template-orange-FEDCC5 justify-center'>
         <div className='md:w-1/2 flex justify-center items-center'>
           <div className='flex flex-col justify-center bg-white bg-opacity-30 h-[700px] w-[600px] rounded-[40px] bg-login-bg backdrop-blur-sm bg-white/30'>
             <FormCommon className='p-24' name='login-form' onFinish={onSubmit}>
-              <p className='font-bold text-4xl mb-4'>Login</p>
+              <p className='font-bold text-4xl mb-4'>{t('Sign In')}</p>
               <InputTextCommon
                 name='email'
                 label='Email'
@@ -67,7 +77,7 @@ const LoginPage = () => {
               />
               <InputPasswordCommon
                 name='password'
-                label='Password'
+                label={t('Pass')}
                 placeholder='Password'
                 rules={[
                   {
@@ -81,7 +91,7 @@ const LoginPage = () => {
               />
               <div className='mt-6'>
                 <ButtonCommon bg='#F25019' minheight='50px' type='primary' htmlType='submit'>
-                  Sign in
+                  {t('Sign In')}
                 </ButtonCommon>
               </div>
             </FormCommon>

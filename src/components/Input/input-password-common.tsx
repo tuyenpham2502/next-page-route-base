@@ -17,6 +17,7 @@ type InputPasswordCommonProps = {
   onCallbackFunction?: any
   size?: 'small' | 'middle' | 'large'
   rest?: any
+  autoFocus?: boolean
 }
 
 export const InputPasswordCommon = (props: InputPasswordCommonProps) => {
@@ -30,6 +31,7 @@ export const InputPasswordCommon = (props: InputPasswordCommonProps) => {
     onCallbackFunction,
     setData,
     size,
+    autoFocus = false,
     ...rest
   } = props
   const [value, setValue] = useState('')
@@ -53,6 +55,8 @@ export const InputPasswordCommon = (props: InputPasswordCommonProps) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <InputTextCommonStyled.Password
+        name='password'
+        autoFocus={autoFocus}
         size={size ?? 'large'}
         value={value}
         onChange={onChange}
