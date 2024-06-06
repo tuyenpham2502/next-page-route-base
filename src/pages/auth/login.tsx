@@ -34,7 +34,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
         password: data.password,
         redirect: false,
       })
-
       if (response && response.ok) {
         setTimeout(() => {
           router.replace('/')
@@ -43,7 +42,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('Login error: ', error)
-      setLoading(false)
     }
   }
 

@@ -52,10 +52,11 @@ export const authOptions: AuthOptions = {
         //   name: 'Quoc test',
         // }
         // If no error and we have user data, return it
-        // if (res.ok && user)
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user
+        if (res.ok && user) {
+          if (user) {
+            // Any object returned will be saved in `user` property of the JWT
+            return user
+          }
         }
         // If you return null then an error will be displayed advising the user to check their details.
         return null
@@ -89,7 +90,6 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, account }) {
-      console.log('account', account)
       // eslint-disable-next-line no-console
       // Persist the OAuth access_token and or the user id to the token right after signin
       // if (account) {
