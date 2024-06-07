@@ -30,7 +30,7 @@ export const refreshTokenAsync = async (params: RefreshTokenRequest) => {
         if (res?.success) {
           cookiesStorageService.setStorage(Constants.API_TOKEN_STORAGE, res.access_token)
           if (session) {
-            session.user.token = res.access_token
+            session.user.access_token = res.access_token
           }
           result = res || {}
         } else {
