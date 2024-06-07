@@ -1,5 +1,3 @@
-'use client'
-
 import { Form, Input } from 'antd'
 import { Rule } from 'antd/es/form'
 import { useEffect, useState } from 'react'

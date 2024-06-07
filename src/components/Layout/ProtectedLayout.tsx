@@ -5,11 +5,12 @@ import { useEffect } from 'react'
 
 type Props = {
   children: React.ReactElement
+  roles?: Array<string>
 }
 
-export const ProtectedLayout = ({ children }: Props): JSX.Element => {
+export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
   const router = useRouter()
-  const { status: sessionStatus } = useSession()
+  const { status: sessionStatus, data: session } = useSession()
   const authorized = sessionStatus === 'authenticated'
   const unAuthorized = sessionStatus === 'unauthenticated'
   const loading = sessionStatus === 'loading'
@@ -20,7 +21,11 @@ export const ProtectedLayout = ({ children }: Props): JSX.Element => {
     if (unAuthorized) {
       router.replace('/auth/login')
     }
-  }, [loading, unAuthorized, sessionStatus, router])
+    if (roles && session && !roles.includes(session.user.role[0])) {
+      router.replace('403')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, unAuthorized, sessionStatus, router, authorized, roles])
 
   // if the user refresh the page or somehow navigated to the protected page
   if (loading) {

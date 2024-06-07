@@ -3,25 +3,22 @@ import Link from 'next/link'
 
 import SEOHead from '@/components/Seo'
 import TransitionCommon from '@/components/Transition'
-import notFound from 'assets/images/404.svg'
+import notPermission from 'assets/images/403.svg'
 
 const NonPermissionPage = () => {
   return (
     <>
-      <SEOHead title='404 Not Found' />
+      <SEOHead title='Error Forbidden' />
       <TransitionCommon>
-        <div className='bg-white h-screen flex flex-col justify-center items-center gap-14'>
-          <Image src={notFound} alt='Not found' priority />
-          <div className='max-w-96 text-center flex flex-col gap-3 items-center'>
-            <h1 className='text-5xl text-[#1A1C16]'>Page Not Found</h1>
-            <p className='text-[#44483D]'>
-              The page you are looking for might have been removed had its name changed or is
-              temporarily unavailable.
-            </p>
+        <div className='bg-white h-screen flex flex-row justify-center items-center gap-14'>
+          <div className='max-w-[400px] text-center flex flex-col gap-3 items-center'>
+            <h1 className='text-5xl text-[#1A1C16]'>Permission denied</h1>
+            <p className='text-[#44483D]'>You don&apos;t have permission to access this page.</p>
             <Link href='/' className='bg-[#8AC732] text-white py-2 px-4 rounded-full max-w-36'>
               Home Page
             </Link>
           </div>
+          <Image src={notPermission} alt='Not found' priority />
         </div>
       </TransitionCommon>
     </>

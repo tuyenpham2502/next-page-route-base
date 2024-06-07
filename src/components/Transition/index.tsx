@@ -1,5 +1,3 @@
-'use client'
-
 import { motion } from 'framer-motion'
 
 const Transition = ({ children }: { children: React.ReactNode }) => {

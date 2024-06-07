@@ -1,10 +1,11 @@
-import { Form } from 'antd'
-import { Rule } from 'antd/es/form'
+import { Input } from 'antd'
+import Form, { Rule } from 'antd/es/form'
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
-import { InputTextCommonStyled } from '@/components/Input/input-text-common'
+export const InputOtpCommonStyled = styled(Input.OTP)``
 
-type InputPasswordCommonProps = {
+type InputOtpCommonProps = {
   name?: string
   label?: string
   placeholder?: string
@@ -15,14 +16,14 @@ type InputPasswordCommonProps = {
   onCallbackFunction?: any
   size?: 'small' | 'middle' | 'large'
   rest?: any
-  autoFocus?: boolean
+  autoFocus: boolean
+  length: number
 }
 
-export const InputPasswordCommon = (props: InputPasswordCommonProps) => {
+export const InputOtpCommon = (props: InputOtpCommonProps) => {
   const {
     name,
     label,
-    placeholder,
     rules,
     dataAtrribute,
     attribute,
@@ -30,11 +31,13 @@ export const InputPasswordCommon = (props: InputPasswordCommonProps) => {
     setData,
     size,
     autoFocus = false,
+    length,
     ...rest
   } = props
-  const [value, setValue] = useState('')
-  const [passwordVisible, setPasswordVisible] = useState(false)
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const [value, setValue] = useState<string>('')
+
+  const onChange = (e: any) => {
     setValue(e.target.value)
     if (onCallbackFunction) {
       onCallbackFunction(e.target.value)
@@ -50,16 +53,16 @@ export const InputPasswordCommon = (props: InputPasswordCommonProps) => {
       setValue(dataAtrribute)
     }
   }, [dataAtrribute])
+
   return (
     <Form.Item name={name} label={label} rules={rules}>
-      <InputTextCommonStyled.Password
-        name='password'
+      <InputOtpCommonStyled
+        length={length}
         autoFocus={autoFocus}
         size={size ?? 'large'}
         value={value}
         onChange={onChange}
-        placeholder={placeholder}
-        visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+        inputMode='numeric'
         {...rest}
       />
     </Form.Item>

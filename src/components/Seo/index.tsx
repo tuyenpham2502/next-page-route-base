@@ -159,9 +159,9 @@ const SEOHead = (props: SEOProps) => {
         </>
       )}
       {/* Favicons */}
-      {favicons.map((linkProps) => (
+      {/* {favicons.map((linkProps) => (
         <link key={linkProps.href} {...linkProps} />
-      ))}
+      ))} */}
       {/* Windows 8 app icon */}
       <meta name='msapplication-TileColor' content='#F53838' />
       <meta name='msapplication-TileImage' content='/favicon/ms-icon-144x144.png' />

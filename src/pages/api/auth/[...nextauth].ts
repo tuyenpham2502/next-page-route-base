@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
@@ -104,8 +105,8 @@ export const authOptions: AuthOptions = {
       // Send properties to the client, like an access_token and user id from a provider.
       // session.accessToken = token.accessToken
       // session.user.id = token.id
-      // eslint-disable-next-line no-param-reassign
       session.user = token as any
+      session.user.role = ['admin']
       return session // The return type will match the one returned in `useSession()`
     },
   },
