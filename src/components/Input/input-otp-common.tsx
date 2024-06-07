@@ -18,6 +18,7 @@ type InputOtpCommonProps = {
   rest?: any
   autoFocus: boolean
   length: number
+  onChange: any
 }
 
 export const InputOtpCommon = (props: InputOtpCommonProps) => {
@@ -32,21 +33,22 @@ export const InputOtpCommon = (props: InputOtpCommonProps) => {
     size,
     autoFocus = false,
     length,
+    onChange,
     ...rest
   } = props
 
   const [value, setValue] = useState<string>('')
 
-  const onChange = (e: any) => {
-    setValue(e.target.value)
-    if (onCallbackFunction) {
-      onCallbackFunction(e.target.value)
-    } else {
-      setData({
-        [attribute]: e.target.value,
-      })
-    }
-  }
+  // const onChange = (e: any) => {
+  //   setValue(e)
+  //   if (onCallbackFunction) {
+  //     onCallbackFunction(e)
+  //   } else {
+  //     setData({
+  //       [attribute]: e,
+  //     })
+  //   }
+  // }
 
   useEffect(() => {
     if (dataAtrribute) {

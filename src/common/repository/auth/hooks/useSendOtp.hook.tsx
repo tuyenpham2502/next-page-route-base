@@ -2,7 +2,7 @@ import { EndPoint } from '@/common/EndPoint'
 import { CodesMap } from '@/common/enums/CodeMap'
 import { AuthManagementServices } from '@/common/repository/auth/services/AuthManagement.services'
 import LoggerService from '@/common/services/logger.service'
-import { SignInRequest } from '@/common/types/dto/auth/signInRequest'
+import { SendOtpRequest } from '@/common/types/dto/auth/sendOtpRequest'
 import FailureResponse from '@/common/types/dto/common/failureResponse'
 import InvalidModelStateResponse from '@/common/types/dto/common/invalidModelStateResponse'
 import SuccessResponse from '@/common/types/dto/common/successResponse'
@@ -10,18 +10,18 @@ import { notifyError } from '@/components/Toast/toastMessage'
 import { useCancelToken } from '@/libs/axios/useCancelToken'
 import { refactorFormDataCommon } from '@/utils/helper'
 
-export const useLoginHook = () => {
+export const useSendOtpHook = () => {
   const { newCancelToken } = useCancelToken()
   async function request(
-    params: SignInRequest,
+    params: SendOtpRequest,
     setLoading: (loading: boolean) => void,
     onSuccess: (res: any) => void,
     onError: () => void
   ) {
     const loggerService = new LoggerService()
     setLoading(true)
-    const response = await new AuthManagementServices().signInAsync(
-      EndPoint.Auth.SignIn,
+    const response = await new AuthManagementServices().senOtpAsync(
+      EndPoint.Auth.SendOtp,
       refactorFormDataCommon(params),
       newCancelToken()
     )

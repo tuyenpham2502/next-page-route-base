@@ -5,6 +5,10 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 
+import { useSendOtpHook } from '@/common/repository/auth/hooks/useSendOtp.hook'
+import { useLoginHook } from '@/common/repository/auth/hooks/useSignIn.hook'
+import { SendOtpRequest } from '@/common/types/dto/auth/sendOtpRequest'
+import { SignInRequest } from '@/common/types/dto/auth/signInRequest'
 import { ButtonCommon } from '@/components/Button/button-common'
 import { FormCommon } from '@/components/Form/form-common'
 import { InputOtpCommon } from '@/components/Input/input-otp-common'
@@ -24,25 +28,40 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
 
 const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   useAuth('/')
+  const [signInReq] = useLoginHook()
+  const [sendOtpReq] = useSendOtpHook()
   const { t } = useTranslation('login')
   // const router = useRouter()
   const [data, setData] = useStateDataForm({})
   const [isVerify, setIsVerify] = useState(false)
   const onSubmit = async () => {
-    try {
-      const response = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      })
-      if (response && response.ok) {
-        notifySuccess('', 'Login success')
-        setIsVerify(true)
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('Login error: ', error)
-    }
+    const signInParams = new SignInRequest({
+      email: data.email,
+      password: data.password,
+    })
+    await signInReq(
+      signInParams,
+      () => { },
+      (res: any) => {
+        setData({
+          token: res.token,
+        })
+        const sendOtpParams = new SendOtpRequest({
+          email: data.email,
+          token: res.token,
+        })
+        sendOtpReq(
+          sendOtpParams,
+          () => { },
+          () => {
+            setIsVerify(true)
+          },
+          () => { }
+        )
+
+      },
+      () => { }
+    )
   }
 
   return (
@@ -111,7 +130,24 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   attribute='otp'
                   setData={setData}
                   dataAtrribute='otp'
-                  length={6}
+                  length={5}
+                  onChange={async (e: string) => {
+                    try {
+                      const response = await signIn('credentials', {
+                        email: data.email,
+                        otp: e,
+                        token: data.token,
+                        redirect: false,
+                      })
+                      console.log(response);
+                      if (response && response.ok) {
+                        notifySuccess('', 'Login success')
+                      }
+                    } catch (error) {
+                      // eslint-disable-next-line no-console
+                      console.log('Login error: ', error)
+                    }
+                  }}
                 />
               </FormCommon>
             )}

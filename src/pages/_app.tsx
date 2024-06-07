@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import type { Session } from 'next-auth'
@@ -16,7 +17,7 @@ type AppPropsWithAuth = AppProps<{ session: Session }> & {
   }
 }
 
-const App = ({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAuth) => {
+function App({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAuth) {
   return (
     <>
       <RecoilRoot>

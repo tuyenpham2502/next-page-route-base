@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { AxiosResponse, CancelToken, isCancel } from 'axios'
-import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 
 import { LoadingState } from '@/common/atoms/loadingState'
 import { CodesMap } from '@/common/enums/CodeMap'
@@ -27,10 +27,10 @@ export default class RequestService implements IRequestService {
     status: 202,
   }
 
-  private getOptions(file: boolean = false) {
-    // let token = context?.token || "";
-    const session = useSession()
-    const token = session.data?.user.token || ''
+  async getOptions(file: boolean = false) {
+    const session = await getSession()
+    const token = session?.user.access_token
+    console.log('session', token)
     let opts: any = {
       headers: {
         'Content-Type': 'application/json',
@@ -81,6 +81,7 @@ export default class RequestService implements IRequestService {
     cancellationToken?: CancelToken
   ): Promise<RequestResponse> {
     try {
+      const option = await this.getOptions()
       const _params = params
         ? Object.keys(params)
             .map((key) => `${key}=${encodeURIComponent(params[key])}`)
@@ -88,7 +89,7 @@ export default class RequestService implements IRequestService {
         : ''
       const _url = `${this.baseURL}/${endpoint}${_params === '' ? '' : `?${_params}`}`
       return this.processRequest(
-        await axiosInstance.get(_url, { ...this.getOptions(), cancelToken: cancellationToken })
+        await axiosInstance.get(_url, { ...option, cancelToken: cancellationToken })
       )
     } catch (e: any) {
       if (isCancel(e)) {
@@ -111,6 +112,7 @@ export default class RequestService implements IRequestService {
   ): Promise<RequestResponse> {
     // const setIsLoading = useSetRecoilState(LoadingState);
     try {
+      const option = await this.getOptions()
       const _params = params
         ? Object.keys(params)
             .map((key) => `${key}=${encodeURIComponent(params[key])}`)
@@ -118,11 +120,10 @@ export default class RequestService implements IRequestService {
         : ''
       const _url = `${this.baseURL}/${endpoint}${_params === '' ? '' : `?${_params}`}`
       await setRecoilStateAsync(LoadingState, { isLoading: true, uri: _url })
-
       const _requestBody = JSON.stringify(requestBody)
       return this.processRequest(
-        await axiosInstance.post(_url, _requestBody, {
-          ...this.getOptions(),
+        await axiosInstance.post(_url, requestBody, {
+          ...option,
           cancelToken: cancellationToken,
         })
       )
@@ -146,7 +147,7 @@ export default class RequestService implements IRequestService {
             .map((key) => `${key}=${encodeURIComponent(params[key])}`)
             .join('&')
         : ''
-      const option = this.getOptions(true)
+      const option = await this.getOptions(true)
       option.headers.Accept = acceptFile(endpoint, 'pdf')
 
       // const _params = params ? Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join("&") : "";
@@ -172,7 +173,7 @@ export default class RequestService implements IRequestService {
 
       const _form = new FormData()
       _form.append('file', params)
-      const _options = this.getOptions()
+      const _options = await this.getOptions()
       _options.headers['Content-Type'] = 'multipart/form-data'
       return this.processRequest(await axiosInstance.post(_url, _form, _options))
     } catch (e: any) {

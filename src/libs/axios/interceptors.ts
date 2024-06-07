@@ -22,20 +22,6 @@ let isRefreshing = false
 let requests: any = []
 
 const onRequest = (config: InternalAxiosRequestConfig | any): InternalAxiosRequestConfig => {
-  const localStorageService = new LocalStorageService()
-
-  // const storage = localStorageService.readStorage(Constants.LocalStorage.ApiToken)
-  // Set Headers Here
-  // Check Authentication Here
-  // Set Loading Start Here
-
-  // if (storage?.idToken) {
-  //   config.headers = {
-  //     ...config.headers,
-  //     // eslint-disable-next-line @typescript-eslint/naming-convention
-  //     Authorization: `Bearer ${storage?.idToken}`,
-  //   }
-  // }
   return config
 }
 

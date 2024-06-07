@@ -22,11 +22,8 @@ export const authOptions: AuthOptions = {
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
         email: { label: 'Email', type: 'email', placeholder: 'Please input your email' },
-        password: {
-          label: 'Password',
-          type: 'password',
-          placeholder: 'Please input your password',
-        },
+        otp: { label: 'OTP', type: 'text', placeholder: 'Please input your OTP' },
+        token: { label: 'Token', type: 'text', placeholder: 'Please input your token' },
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async authorize(credentials, req) {
@@ -36,14 +33,15 @@ export const authOptions: AuthOptions = {
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
-        const res = await fetch('https://propero.nobisoft.vn/public/user/login', {
+        const res = await fetch('https://propero.nobisoft.vn/private/sms/verifyOTP', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             email: credentials?.email,
-            password: credentials?.password,
+            otp: credentials?.otp,
+            token: credentials?.token,
           }),
         })
         const user = await res.json()
@@ -101,12 +99,13 @@ export const authOptions: AuthOptions = {
       return { ...token, ...user }
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       // Send properties to the client, like an access_token and user id from a provider.
       // session.accessToken = token.accessToken
       // session.user.id = token.id
-      session.user = token as any
+      session.user = token.result as any;
       session.user.role = ['admin']
+      console.log('token', token);
       return session // The return type will match the one returned in `useSession()`
     },
   },

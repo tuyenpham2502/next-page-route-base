@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useSession } from 'next-auth/react'
+
 import { CodesMap } from '@/common/enums/CodeMap'
 import CookiesStorageService from '@/common/services/cookiesStorage.service'
 import LoggerService from '@/common/services/logger.service'
@@ -12,6 +15,7 @@ import { EndPoint } from 'src/common/EndPoint'
 import { AuthManagementServices } from 'src/common/repository/auth/services/AuthManagement.services'
 
 export const refreshTokenAsync = async (params: RefreshTokenRequest) => {
+  const { data: session } = useSession()
   const loggerService = new LoggerService()
   const cookiesStorageService = new CookiesStorageService()
   const response = await new AuthManagementServices().refreshTokenAsync(
@@ -25,6 +29,9 @@ export const refreshTokenAsync = async (params: RefreshTokenRequest) => {
         const res = (response as SuccessResponse).data
         if (res?.success) {
           cookiesStorageService.setStorage(Constants.API_TOKEN_STORAGE, res.access_token)
+          if (session) {
+            session.user.token = res.access_token
+          }
           result = res || {}
         } else {
           cookiesStorageService.removeStorage(Constants.API_TOKEN_STORAGE)
