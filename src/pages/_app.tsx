@@ -17,6 +17,19 @@ type AppPropsWithAuth = AppProps<{ session: Session }> & {
 }
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAuth) => {
+
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <>
       <RecoilRoot>
