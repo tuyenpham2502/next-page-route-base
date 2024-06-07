@@ -41,7 +41,7 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
     })
     await signInReq(
       signInParams,
-      () => { },
+      () => {},
       (res: any) => {
         setData({
           token: res.token,
@@ -52,15 +52,14 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
         })
         sendOtpReq(
           sendOtpParams,
-          () => { },
+          () => {},
           () => {
             setIsVerify(true)
           },
-          () => { }
+          () => {}
         )
-
       },
-      () => { }
+      () => {}
     )
   }
 
@@ -139,7 +138,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
                         token: data.token,
                         redirect: false,
                       })
-                      console.log(response);
                       if (response && response.ok) {
                         notifySuccess('', 'Login success')
                       }

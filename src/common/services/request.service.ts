@@ -30,7 +30,6 @@ export default class RequestService implements IRequestService {
   async getOptions(file: boolean = false) {
     const session = await getSession()
     const token = session?.user.access_token
-    console.log('session', token)
     let opts: any = {
       headers: {
         'Content-Type': 'application/json',

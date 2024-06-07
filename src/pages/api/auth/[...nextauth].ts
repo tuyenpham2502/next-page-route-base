@@ -103,9 +103,8 @@ export const authOptions: AuthOptions = {
       // Send properties to the client, like an access_token and user id from a provider.
       // session.accessToken = token.accessToken
       // session.user.id = token.id
-      session.user = token.result as any;
+      session.user = token.result as any
       session.user.role = ['admin']
-      console.log('token', token);
       return session // The return type will match the one returned in `useSession()`
     },
   },

@@ -24,7 +24,7 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
     if (roles && session && !roles.includes(session.user.role[0])) {
       router.replace('403')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, unAuthorized, sessionStatus, router, authorized, roles])
 
   // if the user refresh the page or somehow navigated to the protected page
