@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 
 import { CodesMap } from '@/common/enums/CodeMap'
 import CookiesStorageService from '@/common/services/cookiesStorage.service'
@@ -15,7 +15,7 @@ import { EndPoint } from 'src/common/EndPoint'
 import { AuthManagementServices } from 'src/common/repository/auth/services/AuthManagement.services'
 
 export const refreshTokenAsync = async (params: RefreshTokenRequest) => {
-  const { data: session } = useSession()
+  const session = await getSession()
   const loggerService = new LoggerService()
   const cookiesStorageService = new CookiesStorageService()
   const response = await new AuthManagementServices().refreshTokenAsync(

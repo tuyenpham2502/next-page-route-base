@@ -14,6 +14,7 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
   const authorized = sessionStatus === 'authenticated'
   const unAuthorized = sessionStatus === 'unauthenticated'
   const loading = sessionStatus === 'loading'
+  const unAuthorizedRoles = roles && session && !roles?.includes(session?.user.role[0])
   useEffect(() => {
     // check if the session is loading or the router is not ready
     if (loading || !router.isReady) return
@@ -21,7 +22,7 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
     if (unAuthorized) {
       router.replace('/auth/login')
     }
-    if (roles && session && !roles.includes(session.user.role[0])) {
+    if (unAuthorizedRoles) {
       router.replace('403')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,5 +39,5 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
 
   // if the user is authorized, render the page
   // otherwise, render nothing while the router redirects him to the login page
-  return authorized ? <>{children}</> : <></>
+  return authorized && !unAuthorizedRoles ? <>{children}</> : <></>
 }

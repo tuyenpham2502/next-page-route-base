@@ -62,5 +62,5 @@ const Home = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   )
 }
 Home.requireAuth = true
-Home.requireRoles = ['admin']
+Home.requireRoles = ['user']
 export default Home
