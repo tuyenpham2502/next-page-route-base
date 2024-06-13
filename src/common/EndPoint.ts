@@ -7,6 +7,5 @@ export class EndPoint {
     static SendOtp = 'private/sms/sendOTP'
 
     static SignOut = 'private/user/logout'
-    
   }
 }

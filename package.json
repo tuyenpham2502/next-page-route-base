@@ -4,7 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "dev": "env-cmd -f .env.dev next dev --port 4000",
+    "dev": "env-cmd -f .env.dev next dev --port 3000",
     "build:dev": "env-cmd -f .env.prod next build",
     "start:dev": "env-cmd -f .env.prod next start",
     "build:stagging": "env-cmd -f .env.stagging next build",
