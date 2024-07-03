@@ -41,7 +41,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
     })
     await signInReq(
       signInParams,
-      () => {},
       (res: any) => {
         setData({
           token: res.token,
@@ -52,7 +51,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
         })
         sendOtpReq(
           sendOtpParams,
-          () => {},
           () => {
             setIsVerify(true)
           },

@@ -28,7 +28,6 @@ const Home = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
     })
     await signOutReq(
       signOutParams,
-      () => {},
       async () => {
         await signOut({
           redirect: false,

@@ -1,10 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import SEOHead from '@/infrastructure/common/components/Seo'
+import TransitionCommon from '@/infrastructure/common/components/Transition'
 import notPermission from 'assets/images/403.svg'
-
-import SEOHead from '@/components/Seo'
-import TransitionCommon from '@/components/Transition'
 
 const NonPermissionPage = () => {
   return (
