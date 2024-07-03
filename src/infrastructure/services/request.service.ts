@@ -98,9 +98,10 @@ export default class RequestService implements IRequestService {
       this.loggerService.error(`[ERROR] ${e}`)
 
       return new FailureResponse({ ...e, message: e.response?.data?.message || e.message })
-    } finally {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
     }
+    // finally {
+    //   await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+    // }
   }
 
   async makePostRequestAsync(
@@ -134,9 +135,10 @@ export default class RequestService implements IRequestService {
       this.loggerService.error(`[ERROR] ${e}`)
 
       return new FailureResponse({ ...e, message: e.response?.data?.message || e.message })
-    } finally {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
     }
+    // finally {
+    //   await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+    // }
   }
 
   async makeGetFileRequestAsync(endpoint: string, params: any): Promise<RequestResponse> {
@@ -160,8 +162,6 @@ export default class RequestService implements IRequestService {
       this.loggerService.error(`[ERROR] ${e}`)
 
       return new FailureResponse({ ...e, message: e.response?.data?.message || e.message })
-    } finally {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
     }
   }
 
@@ -183,9 +183,10 @@ export default class RequestService implements IRequestService {
 
       // TODO: Need to check this
       // return new FailureResponse(result || e.errors);
-    } finally {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
     }
+    // finally {
+    //   await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+    // }
   }
 
   async makePostParamRequestAsync(
@@ -219,9 +220,10 @@ export default class RequestService implements IRequestService {
 
       // throw e;
       return new FailureResponse({ ...e, message: e.response?.data?.message || e.message })
-    } finally {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
     }
+    // finally {
+    //   await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+    // }
   }
 
   // TODO:PUT
@@ -256,9 +258,10 @@ export default class RequestService implements IRequestService {
       this.loggerService.error(`[ERROR] ${e}`)
 
       return new FailureResponse({ ...e, message: e.response?.data?.message || e.message })
-    } finally {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
     }
+    //  finally {
+    //   await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+    // }
   }
 
   // TODO:DELETE

@@ -1,10 +1,10 @@
 import { CancelToken } from 'axios'
 
-import { RefreshTokenRequest } from '@/common/types/dto/auth/refreshTokenRequest'
-import { SendOtpRequest } from '@/common/types/dto/auth/sendOtpRequest'
-import { SignInRequest } from '@/common/types/dto/auth/signInRequest'
-import { SignOutRequest } from '@/common/types/dto/auth/signOutRequest'
-import { RequestResponse } from '@/common/types/dto/common/requestResponse'
+import { RefreshTokenRequest } from '@/core/application/dto/auth/request/refreshTokenRequest'
+import { SendOtpRequest } from '@/core/application/dto/auth/request/sendOtpRequest'
+import { SignInRequest } from '@/core/application/dto/auth/request/signInRequest'
+import { SignOutRequest } from '@/core/application/dto/auth/request/signOutRequest'
+import { RequestResponse } from '@/core/application/dto/common/requestResponse'
 
 export interface IAuthManagementService {
   signInAsync(

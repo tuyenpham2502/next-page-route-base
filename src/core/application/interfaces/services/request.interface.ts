@@ -1,6 +1,6 @@
 import { CancelToken } from 'axios'
 
-import { RequestResponse } from '@/common/types/dto/common/requestResponse'
+import { RequestResponse } from '@/core/application/dto/common/requestResponse'
 
 export interface IRequestService {
   /**

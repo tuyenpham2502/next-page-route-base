@@ -4,8 +4,9 @@ import type { AppProps } from 'next/app'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
-// import { ToastContainer } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import { RecoilRoot } from 'recoil'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { ProtectedLayout } from '@/infrastructure/common/components/Layout/ProtectedLayout'
 import RecoilOutsideComponent from '@/infrastructure/common/libs/recoil-outside/recoil.service'
@@ -19,21 +20,19 @@ type AppPropsWithAuth = AppProps<{ session: Session }> & {
 
 function App({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAuth) {
   return (
-    <>
-      <RecoilRoot>
-        <RecoilOutsideComponent />
-        {/* <ToastContainer style={{ width: '500px' }} /> */}
-        <SessionProvider session={session}>
-          {Component.requireAuth ? (
-            <ProtectedLayout roles={Component.requireRoles}>
-              <Component {...pageProps} />
-            </ProtectedLayout>
-          ) : (
+    <RecoilRoot>
+      <RecoilOutsideComponent />
+      <ToastContainer style={{ width: '500px' }} />
+      <SessionProvider session={session}>
+        {Component.requireAuth ? (
+          <ProtectedLayout roles={Component.requireRoles}>
             <Component {...pageProps} />
-          )}
-        </SessionProvider>
-      </RecoilRoot>
-    </>
+          </ProtectedLayout>
+        ) : (
+          <Component {...pageProps} />
+        )}
+      </SessionProvider>
+    </RecoilRoot>
   )
 }
 
