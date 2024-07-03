@@ -27,7 +27,7 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
       router.replace('/auth/login')
     }
     if (unAuthorizedRoles) {
-      router.replace('403')
+      router.replace('/403')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, unAuthorized, sessionStatus, router, authorized, roles])
