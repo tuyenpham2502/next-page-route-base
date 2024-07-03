@@ -2,7 +2,7 @@
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
-import LoggerService from '@/common/services/logger.service'
+import LoggerService from '@/infrastructure/services/logger.service'
 
 const loggerService = new LoggerService()
 export const authOptions: AuthOptions = {

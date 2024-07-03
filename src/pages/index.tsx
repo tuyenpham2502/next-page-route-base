@@ -4,11 +4,11 @@ import { signOut, useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { useSignOutHook } from '@/common/repository/auth/hooks/useSignOut.hook'
-import { SignOutRequest } from '@/common/types/dto/auth/signOutRequest'
-import { ButtonCommon } from '@/components/Button/button-common'
-import SEOHead from '@/components/Seo/index'
-import TransitionCommon from '@/components/Transition'
+import { SignOutRequest } from '@/core/application/dto/auth/request/signOutRequest'
+import { ButtonCommon } from '@/infrastructure/common/components/Button/button-common'
+import SEOHead from '@/infrastructure/common/components/Seo'
+import TransitionCommon from '@/infrastructure/common/components/Transition'
+import { useSignOutHook } from '@/infrastructure/repository/auth/hooks/useSignOut.hook'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {

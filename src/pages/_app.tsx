@@ -7,8 +7,8 @@ import { appWithTranslation } from 'next-i18next'
 // import { ToastContainer } from 'react-toastify'
 import { RecoilRoot } from 'recoil'
 
-import { ProtectedLayout } from '@/components/Layout/ProtectedLayout'
-import RecoilOutsideComponent from '@/libs/recoil-outside/recoil.service'
+import { ProtectedLayout } from '@/infrastructure/common/components/Layout/ProtectedLayout'
+import RecoilOutsideComponent from '@/infrastructure/common/libs/recoil-outside/recoil.service'
 
 type AppPropsWithAuth = AppProps<{ session: Session }> & {
   Component: {
