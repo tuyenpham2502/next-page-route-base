@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify'
 import { RecoilRoot } from 'recoil'
 import 'react-toastify/dist/ReactToastify.css'
 
+import MainLayout from '@/infrastructure/common/components/Layout/MainLayout'
 import { ProtectedLayout } from '@/infrastructure/common/components/Layout/ProtectedLayout'
 import RecoilOutsideComponent from '@/infrastructure/common/libs/recoil-outside/recoil.service'
 
@@ -24,13 +25,15 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppPropsWithAu
       <RecoilOutsideComponent />
       <ToastContainer style={{ width: '500px' }} />
       <SessionProvider session={session}>
-        {Component.requireAuth ? (
-          <ProtectedLayout roles={Component.requireRoles}>
+        <MainLayout>
+          {Component.requireAuth ? (
+            <ProtectedLayout roles={Component.requireRoles}>
+              <Component {...pageProps} />
+            </ProtectedLayout>
+          ) : (
             <Component {...pageProps} />
-          </ProtectedLayout>
-        ) : (
-          <Component {...pageProps} />
-        )}
+          )}
+        </MainLayout>
       </SessionProvider>
     </RecoilRoot>
   )

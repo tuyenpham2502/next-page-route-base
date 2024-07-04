@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
 
-import { LoadingState } from '@/core/application/common/atoms/loadingState'
 import { FullPageLoading } from '@/infrastructure/common/components/Controls/loading'
 
 type Props = {
@@ -17,7 +15,6 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
   const authorized = sessionStatus === 'authenticated'
   const unAuthorized = sessionStatus === 'unauthenticated'
   const loading = sessionStatus === 'loading'
-  const loadingState = useRecoilValue(LoadingState)
   const unAuthorizedRoles = roles && session && !roles?.includes(session?.user.role[0])
   useEffect(() => {
     // check if the session is loading or the router is not ready
@@ -39,12 +36,5 @@ export const ProtectedLayout = ({ children, roles }: Props): JSX.Element => {
 
   // if the user is authorized, render the page
   // otherwise, render nothing while the router redirects him to the login page
-  return authorized && !unAuthorizedRoles ? (
-    <>
-      {children}
-      <FullPageLoading isLoading={loadingState.isLoading} />
-    </>
-  ) : (
-    <></>
-  )
+  return authorized && !unAuthorizedRoles ? <>{children}</> : <></>
 }

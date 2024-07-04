@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { EndPoint } from '@/core/application/common/EndPoint'
 import { SendOtpRequest } from '@/core/application/dto/auth/request/sendOtpRequest'
 import { useCancelToken } from '@/infrastructure/common/libs/axios/useCancelToken'
@@ -11,7 +13,7 @@ export const useSendOtpHook = () => {
     params: SendOtpRequest,
     onSuccess: (res: any) => void,
     onError: () => void,
-    isLoading: boolean = true
+    setLoading?: Dispatch<SetStateAction<boolean>>
   ) {
     await requestCommon(
       newCancelToken(),
@@ -20,7 +22,7 @@ export const useSendOtpHook = () => {
       params,
       onSuccess,
       onError,
-      isLoading
+      setLoading
     )
   }
   return [request]

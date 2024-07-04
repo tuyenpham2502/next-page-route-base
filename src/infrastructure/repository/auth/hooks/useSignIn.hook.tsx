@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { EndPoint } from '@/core/application/common/EndPoint'
 import { SignInRequest } from '@/core/application/dto/auth/request/signInRequest'
 import { useCancelToken } from '@/infrastructure/common/libs/axios/useCancelToken'
@@ -12,7 +14,7 @@ export const useLoginHook = () => {
     params: SignInRequest,
     onSuccess: (res: any) => void,
     onError: () => void,
-    isLoading: boolean = true
+    setLoading?: Dispatch<SetStateAction<boolean>>
   ) {
     await requestCommon(
       newCancelToken(),
@@ -21,7 +23,7 @@ export const useLoginHook = () => {
       refactorFormDataCommon(params),
       onSuccess,
       onError,
-      isLoading
+      setLoading
     )
   }
   return [request]

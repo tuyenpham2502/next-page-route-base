@@ -119,7 +119,7 @@ export default class RequestService implements IRequestService {
             .join('&')
         : ''
       const _url = `${this.baseURL}/${endpoint}${_params === '' ? '' : `?${_params}`}`
-      await setRecoilStateAsync(LoadingState, { isLoading: true, uri: _url })
+      // await setRecoilStateAsync(LoadingState, { isLoading: true, uri: _url })
       const _requestBody = JSON.stringify(requestBody)
       return this.processRequest(
         await axiosInstance.post(_url, requestBody, {
@@ -241,7 +241,7 @@ export default class RequestService implements IRequestService {
             .join('&')
         : ''
       const _url = `${this.baseURL}/${endpoint}${_params === '' ? '' : `?${_params}`}`
-      await setRecoilStateAsync(LoadingState, { isLoading: true, uri: _url })
+      // await setRecoilStateAsync(LoadingState, { isLoading: true, uri: _url })
 
       const _requestBody = JSON.stringify(requestBody)
       return this.processRequest(

@@ -60,7 +60,6 @@ const LoginPage = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
       () => {}
     )
   }
-
   return (
     <>
       <SEOHead title={t('Sign In')} />
