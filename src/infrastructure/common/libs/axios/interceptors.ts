@@ -128,57 +128,9 @@ const onErrorResponse = async (error: AxiosError | Error | any): Promise<AxiosEr
         }
         break
       }
-      case 403:
-        {
-          const originalRequest: any = error.config
-          try {
-            const session = await getSession()
-            const token = session?.user.access_token
-            const refreshToken = session?.user.refresh_token
-            if (token && !originalRequest._retry) {
-              originalRequest._retry = true
-
-              if (!isRefreshing) {
-                isRefreshing = true
-                const info: any = jwtDecode(token)
-                // refreshTokenRequest = refreshTokenRequest ? refreshTokenRequest :
-                const result: any = await refreshTokenAsync(
-                  new RefreshTokenRequest({
-                    refresh_token: refreshToken || '',
-                  })
-                )
-                if (result?.access_token) {
-                  refreshTokenRequest = result.access_token || null
-                  if (originalRequest.headers) {
-                    originalRequest.headers.Authorization = `Bearer ${result.access_token}`
-                  }
-                  requests.forEach((cb: any) => cb(result.access_token))
-                  requests = []
-                  return axiosInstance(originalRequest)
-                }
-              } else {
-                return new Promise((resolve) => {
-                  requests.push((newToken: string) => {
-                    // Rename the parameter 'token' to 'newToken'
-                    if (originalRequest.headers) {
-                      originalRequest.headers.Authorization = `Bearer ${newToken}` // Update the reference to the renamed parameter
-                    }
-                    resolve(axiosInstance(originalRequest))
-                  })
-                })
-              }
-            }
-          } catch (_error: any) {
-            if (_error.response && _error.response.data) {
-              return Promise.reject(_error.response.data)
-            }
-
-            return Promise.reject(_error)
-          } finally {
-            isRefreshing = false
-          }
-        }
+      case 403: {
         break
+      }
       case 404: {
         // "Invalid request"
         break

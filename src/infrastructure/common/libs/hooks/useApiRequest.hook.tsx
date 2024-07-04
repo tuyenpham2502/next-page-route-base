@@ -23,60 +23,66 @@ export const useApiRequestHook = () => {
     onError: () => void,
     setLoading?: Dispatch<SetStateAction<boolean>>
   ) {
-    if (setLoading) {
-      setLoading(true)
-    } else {
-      await setRecoilStateAsync(LoadingState, { isLoading: true, uri: endpoint })
-    }
-    const response = await serviceInstance(endpoint, params, newCancelToken)
+    try {
+      if (setLoading) {
+        setLoading(true)
+      } else {
+        await setRecoilStateAsync(LoadingState, { isLoading: true, uri: endpoint })
+      }
+      const response = await serviceInstance(endpoint, params, newCancelToken)
 
-    if ((response as FailureResponse)?.code !== CodesMap.CANCEL_TOKEN) {
-      switch (response.status) {
-        case 200: {
-          const res = (response as SuccessResponse).data
-          if (res?.success) {
-            if (onSuccess) {
-              onSuccess(res)
+      if ((response as FailureResponse)?.code !== CodesMap.CANCEL_TOKEN) {
+        switch (response.status) {
+          case 200: {
+            const res = (response as SuccessResponse).data
+            if (res?.success) {
+              if (onSuccess) {
+                onSuccess(res)
+              }
+            } else {
+              onError()
+              notifyError(
+                '',
+                (res.errors?.length && res.errors[0]?.error) ||
+                  'An error occurred. Please contact the administrator'
+              )
             }
-          } else {
-            onError()
+            break
+          }
+          case 202: {
             notifyError(
               '',
-              (res.errors?.length && res.errors[0]?.error) ||
+              (response as FailureResponse).message ||
                 'An error occurred. Please contact the administrator'
             )
+            onError()
+            break
           }
-          break
-        }
-        case 202: {
-          notifyError(
-            '',
-            (response as FailureResponse).message ||
-              'An error occurred. Please contact the administrator'
-          )
-          onError()
-          break
-        }
-        case 400: {
-          notifyError(
-            '',
-            (response as InvalidModelStateResponse).message ||
-              'An error occurred. Please contact the administrator'
-          )
-          loggerService.info(response as InvalidModelStateResponse)
-          onError()
-          break
-        }
-        default: {
-          notifyError('', 'An error occurred. Please contact the administrator')
-          onError()
+          case 400: {
+            notifyError(
+              '',
+              (response as InvalidModelStateResponse).message ||
+                'An error occurred. Please contact the administrator'
+            )
+            loggerService.info(response as InvalidModelStateResponse)
+            onError()
+            break
+          }
+          default: {
+            notifyError('', 'An error occurred. Please contact the administrator')
+            onError()
+          }
         }
       }
-    }
-    if (setLoading) {
-      setLoading(false)
-    } else {
-      await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+    } catch (error) {
+      notifyError('', 'An error occurred. Please contact the administrator')
+      onError()
+    } finally {
+      if (setLoading) {
+        setLoading(false)
+      } else {
+        await setRecoilStateAsync(LoadingState, { isLoading: false, uri: '' })
+      }
     }
   }
 
